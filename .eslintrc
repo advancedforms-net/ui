@@ -1,0 +1,11 @@
+{
+	"extends": [
+		"@nuxtjs/eslint-config-typescript"
+	],
+	"rules": {
+		"indent": ["error", "tab"],
+		"vue/html-indent": ["error", "tab"],
+		"no-tabs": ["warn" , { "allowIndentationTabs": true }],
+		"spaced-comment": ["error", "always"],
+	}
+}
