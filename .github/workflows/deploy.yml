@@ -1,2 +1,14 @@
-- name: Nuxt3 to Github Pages
-  uses: khanshifaul/NuxtPagesAction@0.0.3
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+    - uses: actions/checkout@v2
+    - id: Build
+      uses: khanshifaul/NuxtPagesAction@0.0.3
+      with:
+        username: 'advancedforms-net'
+        reponame: 'ui'
+        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
