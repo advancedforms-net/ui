@@ -4,11 +4,20 @@ export default defineNuxtConfig({
 		'@nuxtjs/stylelint-module',
 		'@nuxtjs/eslint-module',
 		'@element-plus/nuxt',
-		'nuxt-simple-robots'
+		'nuxt-simple-robots',
+		'@pinia/nuxt',
 	],
 
 	// stylelint: { /** Options */ }
 	elementPlus: { /** Options */ },
 
-	devtools: true
-})
+	devtools: {
+		enabled: true,
+	},
+
+	runtimeConfig: {
+		public: {
+			apiUrl: process.env.API_URL || 'https://localhost:5001',
+		},
+	},
+});

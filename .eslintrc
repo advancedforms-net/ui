@@ -7,5 +7,7 @@
 		"vue/html-indent": ["error", "tab"],
 		"no-tabs": ["warn" , { "allowIndentationTabs": true }],
 		"spaced-comment": ["error", "always"],
+		"semi": ["error", "always"],
+		"comma-dangle": ["error", "always-multiline"]
 	}
 }

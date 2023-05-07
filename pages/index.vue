@@ -1,39 +1,30 @@
 <script setup lang="ts">
-const route = useRoute()
+import { storeToRefs } from 'pinia';
 
-const form = reactive({
-	email: ''
-})
+import { useAuthStore, useFormsStore } from '@/stores';
 
-const onSubmit = () => {
-	console.log('submit!')
-}
+const authStore = useAuthStore();
+const { userToken } = storeToRefs(authStore);
+
+const formsStore = useFormsStore();
+const { forms } = storeToRefs(formsStore);
+
+formsStore.getAll();
 </script>
 
 <template>
 	<div>
-		<el-container>
-			<el-header>
-				<h1>Nuxt Routing set up successfully!</h1>
-			</el-header>
-
-			<el-main>
-				<el-form :inline="true" :model="form" label-width="120px">
-					<el-form-item label="Email">
-						<el-input v-model="form.email" placeholder="Email" type="email" required />
-					</el-form-item>
-					<el-form-item>
-						<el-button type="primary" @click="onSubmit">
-							Login
-						</el-button>
-					</el-form-item>
-				</el-form>
-			</el-main>
-			<el-footer>
-				<p>Current route: {{ route.path }}</p>
-
-				<a href="https://nuxt.com/docs/getting-started/routing" target="_blank">Learn more about Nuxt Routing</a>
-			</el-footer>
-		</el-container>
+		<h1>Hi {{ userToken }}!</h1>
+		<p>You're logged in with Vue 3 + Pinia & JWT!!</p>
+		<h3>Forms from secure api end point:</h3>
+		<ul v-if="forms.length">
+			<li v-for="form in forms" :key="form.id">
+				{{ form.name }}: {{ form.description }}
+			</li>
+		</ul>
+		<div v-if="forms.loading" class="spinner-border spinner-border-sm" />
+		<div v-if="forms.error" class="text-danger">
+			Error loading users: {{ forms.error }}
+		</div>
 	</div>
 </template>
