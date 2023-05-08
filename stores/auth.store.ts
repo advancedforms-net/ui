@@ -34,10 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
 		navigateTo(returnUrl.value || '/');
 	}
 	function logout () {
-		userToken.value = '';
-		if (process.client) {
-			localStorage.removeItem('userToken');
-		}
+		userToken.value = null;
 		navigateTo('/login');
 	}
 
