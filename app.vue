@@ -7,7 +7,7 @@ const authStore = useAuthStore();
 <template>
 	<div>
 		<div class="app-container bg-light">
-			<nav v-show="authStore.user" class="navbar navbar-expand navbar-dark bg-dark">
+			<nav v-show="authStore.userToken" class="navbar navbar-expand navbar-dark bg-dark">
 				<div class="navbar-nav">
 					<RouterLink to="/" class="nav-item nav-link">
 						Home

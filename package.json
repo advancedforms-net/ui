@@ -20,6 +20,7 @@
 		"eslint": "^8.39.0",
 		"nuxt": "^3.4.2",
 		"nuxt-simple-robots": "^2.1.2",
+		"nuxt-xstate": "^0.6.1",
 		"stylelint": "^15.6.0",
 		"stylelint-config-recommended-vue": "^1.4.0"
 	},
@@ -28,6 +29,7 @@
 	},
 	"dependencies": {
 		"@pinia/nuxt": "^0.4.9",
+		"jose": "^4.14.4",
 		"pinia": "^2.0.35"
 	}
 }

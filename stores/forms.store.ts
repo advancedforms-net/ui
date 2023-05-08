@@ -1,22 +1,19 @@
 import { defineStore } from 'pinia';
 
-export const useFormsStore = defineStore({
-	id: 'forms',
-	state: () => ({
-		// initialize state from local storage to enable user to stay logged in
-		forms: {},
-	}),
-	actions: {
-		async getAll () {
-			const config = useRuntimeConfig();
-			const baseUrl = `${config.apiUrl}/api/Forms`;
+export const useFormsStore = defineStore('forms', () => {
+	const forms = ref({});
 
-			this.forms = { loading: true };
-			try {
-				this.forms = await fetchWrapper.get(baseUrl);
-			} catch (error) {
-				this.forms = { error };
-			}
-		},
-	},
+	async function getAll () {
+		const config = useRuntimeConfig();
+		const baseUrl = `${config.apiUrl}/api/Forms`;
+
+		forms.value = { loading: true };
+		try {
+			forms.value = await fetchWrapper.get(baseUrl);
+		} catch (error) {
+			forms.value = { error };
+		}
+	}
+
+	return { forms, getAll };
 });

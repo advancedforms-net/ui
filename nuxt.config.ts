@@ -5,6 +5,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/eslint-module',
 		'@element-plus/nuxt',
 		'nuxt-simple-robots',
+		'nuxt-xstate',
 		'@pinia/nuxt',
 	],
 
@@ -15,6 +16,7 @@ export default defineNuxtConfig({
 		enabled: true,
 	},
 
+	ssr: false,
 	runtimeConfig: {
 		public: {
 			apiUrl: process.env.API_URL || 'https://localhost:5001',
