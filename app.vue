@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { inspect } from '@xstate/inspect';
 import { useAuthStore } from '@/stores';
+
+inspect({
+	// options
+	// url: 'https://stately.ai/viz?inspect', // (default)
+	iframe: false, // open in new window
+});
 
 const authStore = useAuthStore();
 </script>

@@ -29,6 +29,8 @@
 	},
 	"dependencies": {
 		"@pinia/nuxt": "^0.4.9",
+		"@xstate/inspect": "^0.8.0",
+		"@xstate/vue": "^2.0.0",
 		"jose": "^4.14.4",
 		"pinia": "^2.0.35"
 	}
