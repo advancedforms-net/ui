@@ -30,6 +30,8 @@ send('FETCH');
 			<div v-else>
 				No forms created yet.
 			</div>
+
+			<button>Create</button>
 		</div>
 
 		<div v-if="state.matches('loading') || state.matches('initial')" class="spinner-border spinner-border-sm" />
