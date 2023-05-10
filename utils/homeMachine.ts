@@ -28,7 +28,7 @@ type HomeEvent = { type: 'FETCH' } | { type: 'RETRY' };
 
 async function fetchForms () {
 	const config = useRuntimeConfig();
-	const baseUrl = `${config.apiUrl}/api/Forms`;
+	const baseUrl = `${config.apiUrl}/Forms`;
 
 	return await fetchWrapper.get(baseUrl);
 }

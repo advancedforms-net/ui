@@ -5,7 +5,7 @@ export const useFormsStore = defineStore('forms', () => {
 
 	async function getAll () {
 		const config = useRuntimeConfig();
-		const baseUrl = `${config.apiUrl}/api/Forms`;
+		const baseUrl = `${config.apiUrl}/Forms`;
 
 		forms.value = { loading: true };
 		try {

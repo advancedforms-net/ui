@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
 	}
 	async function login (mail: string) {
 		const config = useRuntimeConfig();
-		const baseUrl = `${config.public.apiUrl}/api/Users`;
+		const baseUrl = `${config.public.apiUrl}/Users`;
 
 		// TODO remove the login method, this should be just in the view because this will mail the token
 		const params = new URLSearchParams();
