@@ -11,7 +11,7 @@ export const useFormsStore = defineStore('forms', () => {
 
 	const config = useRuntimeConfig();
 	const baseUrl = `${config.apiUrl}/Forms`;
-	
+
 	async function getAll () {
 		forms.value = { loading: true };
 		try {
@@ -21,7 +21,7 @@ export const useFormsStore = defineStore('forms', () => {
 		}
 	}
 
-	async function create(formData: NewForm) {
+	async function create (formData: NewForm) {
 		forms.value = { loading: true };
 		try {
 			const newForm = await fetchWrapper.post(baseUrl, formData);

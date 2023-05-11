@@ -9,8 +9,10 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 	],
 
-	// stylelint: { /** Options */ }
-	elementPlus: { /** Options */ },
+	// stylelint: { /** Options */ },
+	elementPlus: {
+		themes: ['dark'],
+	},
 
 	devtools: {
 		enabled: true,

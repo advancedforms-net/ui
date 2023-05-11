@@ -28,6 +28,7 @@
 		"vue": "^3.2.0"
 	},
 	"dependencies": {
+		"@element-plus/icons-vue": "^2.1.0",
 		"@pinia/nuxt": "^0.4.9",
 		"@xstate/inspect": "^0.8.0",
 		"@xstate/vue": "^2.0.0",
