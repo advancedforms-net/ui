@@ -24,4 +24,8 @@ export default defineNuxtConfig({
 			apiUrl: process.env.API_URL || 'https://localhost:5001',
 		},
 	},
+
+app: {
+baseURL: '/ui/',
+},
 });
