@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 		},
 	},
 
-app: {
-baseURL: '/ui/',
-},
+	app: {
+		baseURL: '/ui/',
+	},
 });
