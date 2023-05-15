@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import { inspect } from '@xstate/inspect';
-import { useDark, useToggle } from '@vueuse/core';
+import { useDark } from '@vueuse/core';
 import { useAuthStore } from '@/stores';
 
 inspect({
 	// options
 	// url: 'https://stately.ai/viz?inspect', // (default)
 	iframe: false, // open in new window
-});
-
-useHead({
-	title: 'AdvancedForms',
-	meta: [
-		{ name: 'description', content: 'Serverless forms with templates and custom replies.' }
-	],
 });
 
 const route = useRoute();
@@ -23,7 +16,7 @@ const authStore = useAuthStore();
 </script>
 
 <template>
-	<div>
+	<el-container>
 		<el-header>
 			<el-menu
 				:default-active="route.path"
@@ -36,57 +29,41 @@ const authStore = useAuthStore();
 				</el-menu-item>
 
 				<div class="flex-grow" />
-				<el-switch
-					v-model="isDark"
-					inline-prompt
-					:active-icon="ElIconMoon"
-					:inactive-icon="ElIconSunny"
-					style="--el-switch-on-color: #E6A23C;"
-				/>
 
-				<el-menu-item index="/login">
-					Processing Center
-				</el-menu-item>
-				<el-sub-menu index="2">
-					<template #title>
-						Workspace
-					</template>
-					<el-menu-item index="2-1">
-						item one
+				<div class="theme-toggler">
+					<el-switch
+						v-model="isDark"
+						inline-prompt
+						:active-icon="ElIconMoon"
+						:inactive-icon="ElIconSunny"
+						style="--el-switch-on-color: #E6A23C;"
+					/>
+				</div>
+
+				<nav class="navbar-menu">
+					<el-menu-item index="/docs">
+						Docs
 					</el-menu-item>
-					<el-menu-item index="2-2">
-						item two
-					</el-menu-item>
-					<el-menu-item index="2-3">
-						item three
-					</el-menu-item>
-					<el-sub-menu index="2-4">
+
+					<el-sub-menu v-if="authStore.isLoggedIn" index="userMenu">
 						<template #title>
-							item four
+							{{ authStore.userMail }}
 						</template>
-						<el-menu-item index="2-4-1">
-							item one
+						<el-menu-item index="/forms">
+							Forms
 						</el-menu-item>
-						<el-menu-item index="2-4-2">
-							item two
-						</el-menu-item>
-						<el-menu-item index="2-4-3">
-							item three
+						<el-menu-item @click="authStore.logout()">
+							Logout
 						</el-menu-item>
 					</el-sub-menu>
-				</el-sub-menu>
+					<el-menu-item v-else index="/login">
+						Login
+					</el-menu-item>
+				</nav>
 			</el-menu>
 		</el-header>
 
 		<el-main class="app-container bg-light">
-			<nav v-show="authStore.userToken" class="navbar navbar-expand navbar-dark bg-dark">
-				<div class="navbar-nav">
-					<RouterLink to="/" class="nav-item nav-link">
-						Home
-					</RouterLink>
-					<a class="nav-item nav-link" @click="authStore.logout()">Logout</a>
-				</div>
-			</nav>
 			<div class="container pt-4 pb-4">
 				<NuxtLayout>
 					<NuxtPage />
@@ -94,14 +71,35 @@ const authStore = useAuthStore();
 			</div>
 		</el-main>
 
-		<el-footer>
-			c AdvancedForms.net
+		<el-footer class="footer">
+			<el-text size="small" type="info" class="copyright-text">
+				© {{ new Date().getFullYear() }} AdvancedForms.net
+			</el-text>
 		</el-footer>
-	</div>
+	</el-container>
 </template>
 
 <style>
 .flex-grow {
-  flex-grow: 1;
+	flex-grow: 1;
+}
+
+.theme-toggler {
+	display: flex;
+	align-items: center;
+	padding: 8px;
+}
+.navbar-menu {
+	display: flex;
+}
+
+.footer {
+	display: flex;
+}
+
+.copyright-text {
+	text-align: center;
+	display: block;
+	width: 100%;
 }
 </style>

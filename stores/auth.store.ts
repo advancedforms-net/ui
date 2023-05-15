@@ -8,6 +8,8 @@ export const useAuthStore = defineStore('auth', () => {
 	const userMail = useStorage('userMail', '');
 	const returnUrl = ref(null as string | null);
 
+	const isLoggedIn = computed(() => !!userToken.value);
+
 	function auth (token: string) {
 		// token is mailed and will be passed by de url
 		// update pinia state
@@ -38,5 +40,5 @@ export const useAuthStore = defineStore('auth', () => {
 		navigateTo('/login');
 	}
 
-	return { userToken, userMail, returnUrl, auth, login, logout };
+	return { userToken, userMail, isLoggedIn, returnUrl, auth, login, logout };
 });

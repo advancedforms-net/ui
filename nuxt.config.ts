@@ -11,6 +11,7 @@ export default defineNuxtConfig({
 
 	// stylelint: { /** Options */ },
 	elementPlus: {
+		importStyle: 'scss',
 		themes: ['dark'],
 	},
 
@@ -27,5 +28,32 @@ export default defineNuxtConfig({
 
 	app: {
 		baseURL: '/ui/',
+
+		// head
+		head: {
+			title: 'AdvancedForms',
+			meta: [
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+				{
+					hid: 'description',
+					name: 'description',
+					content: 'Serverless forms with templates and custom replies.',
+				},
+			],
+			link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+		},
+	},
+
+	// css
+	css: ['~/assets/scss/index.scss'],
+
+	vite: {
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: '@use "@/assets/scss/element/index.scss" as element;',
+				},
+			},
+		},
 	},
 });
