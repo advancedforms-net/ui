@@ -11,7 +11,8 @@ import homeMachine from '@/utils/homeMachine';
 const dialogFormVisible = ref(false);
 const formCreate = reactive({
 	name: '',
-	region: '',
+	description: '',
+	useCodes: false,
 });
 
 const { state, send } = useMachine(homeMachine, { devTools: true });
@@ -45,16 +46,22 @@ send('FETCH');
 		</div>
 
 		<el-dialog v-model="dialogFormVisible" title="Create new form">
-			<el-form v-loading="true" :model="formCreate">
-				<el-form-item label="Promotion name">
-					<el-input v-model="formCreate.name" autocomplete="off" />
+			<el-form v-loading="false" :model="formCreate">
+				<el-form-item label="Form name">
+					<el-input v-model="formCreate.name" />
 				</el-form-item>
-				<el-form-item label="Zones">
-					<el-select v-model="formCreate.region" placeholder="Please select a zone">
-						<el-option label="Zone No.1" value="shanghai" />
-						<el-option label="Zone No.2" value="beijing" />
-					</el-select>
+				<el-form-item label="Description">
+					<el-input v-model="formCreate.description" autosize type="textarea" />
 				</el-form-item>
+				<el-popover
+					placement="right"
+					trigger="hover"
+					content="this is content, this is content, this is content"
+				>
+					<template #reference>
+						<el-checkbox v-model="formCreate.useCodes" label="Use codes" size="large" />
+					</template>
+				</el-popover>
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
