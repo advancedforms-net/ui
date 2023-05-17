@@ -1,3 +1,5 @@
+const baseURL = '/ui/';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	modules: [
@@ -27,7 +29,7 @@ export default defineNuxtConfig({
 	},
 
 	app: {
-		baseURL: '/ui/',
+		baseURL,
 
 		// head
 		head: {
@@ -40,7 +42,7 @@ export default defineNuxtConfig({
 					content: 'Serverless forms with templates and custom replies.',
 				},
 			],
-			link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+			link: [{ rel: 'icon', type: 'image/x-icon', href: `${baseURL}/favicon.ico` }],
 		},
 	},
 
