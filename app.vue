@@ -3,11 +3,13 @@ import { inspect } from '@xstate/inspect';
 import { useDark } from '@vueuse/core';
 import { useAuthStore } from '@/stores';
 
-inspect({
-	// options
-	// url: 'https://stately.ai/viz?inspect', // (default)
-	iframe: false, // open in new window
-});
+if (process.dev) {
+	inspect({
+		// options
+		// url: 'https://stately.ai/viz?inspect', // (default)
+		iframe: false, // open in new window
+	});
+}
 
 const route = useRoute();
 const isDark = useDark();

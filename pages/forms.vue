@@ -1,22 +1,22 @@
 <script setup lang="ts">
 // import { storeToRefs } from 'pinia';
 
-// import { useAuthStore } from '@/stores';
-import homeMachine from '@/utils/homeMachine';
-
 // const formsStore = useFormsStore();
 // const { forms } = storeToRefs(formsStore);
 
 // formsStore.getAll();
 const dialogFormVisible = ref(false);
-const formCreate = reactive({
-	name: '',
-	description: '',
-	useCodes: false,
-});
+const createForm = ref<FormCreate>();
 
 const { state, send } = useMachine(homeMachine, { devTools: true });
 send('FETCH');
+
+function closeForm () {
+	dialogFormVisible.value = false;
+}
+function resetForm () {
+	createForm.value.reset();
+}
 </script>
 
 <template>
@@ -45,30 +45,14 @@ send('FETCH');
 			</el-button>
 		</div>
 
-		<el-dialog v-model="dialogFormVisible" title="Create new form">
-			<el-form v-loading="false" :model="formCreate">
-				<el-form-item label="Form name">
-					<el-input v-model="formCreate.name" />
-				</el-form-item>
-				<el-form-item label="Description">
-					<el-input v-model="formCreate.description" autosize type="textarea" />
-				</el-form-item>
-				<el-popover
-					placement="right"
-					trigger="hover"
-					content="this is content, this is content, this is content"
-				>
-					<template #reference>
-						<el-checkbox v-model="formCreate.useCodes" label="Use codes" size="large" />
-					</template>
-				</el-popover>
-			</el-form>
+		<el-dialog v-model="dialogFormVisible" title="Create new form" @closed="resetForm">
+			<form-create ref="createForm" hide-submit @submit="closeForm" />
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="dialogFormVisible = false">
+					<el-button @click="closeForm">
 						Cancel
 					</el-button>
-					<el-button type="primary" @click="dialogFormVisible = false">
+					<el-button type="primary" @click="createForm.onSubmit()">
 						Confirm
 					</el-button>
 				</span>
