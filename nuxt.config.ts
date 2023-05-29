@@ -17,6 +17,13 @@ export default defineNuxtConfig({
 		themes: ['dark'],
 	},
 
+	xState: {
+		customMachines: {
+			dir: 'machines',
+			importSuffix: 'Machine',
+		},
+	},
+
 	devtools: {
 		enabled: true,
 	},

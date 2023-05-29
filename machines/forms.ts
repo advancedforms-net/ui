@@ -1,15 +1,15 @@
 import { assign } from 'xstate';
 
-interface HomeContext {
-	forms?: any[];
+interface FormsContext {
+	forms?: Form[];
 	error?: Error;
 }
 
-type InitialContext = HomeContext & { forms: undefined; error: undefined; };
-type ReadyContext = HomeContext & { forms: any[]; error: undefined; };
-type LoadingContext = HomeContext & { forms: any[]; error: undefined; };
-type SuccessContext = HomeContext & { forms: any[]; error: undefined; };
-type FailureContext = HomeContext & { forms: undefined; error: Error };
+type InitialContext = FormsContext & { forms: undefined; error: undefined; };
+type ReadyContext = FormsContext & { forms: Form[]; error: undefined; };
+type LoadingContext = FormsContext & { forms: Form[]; error: undefined; };
+type SuccessContext = FormsContext & { forms: Form[]; error: undefined; };
+type FailureContext = FormsContext & { forms: undefined; error: Error };
 
 type InitialState = { value: 'initial'; context: InitialContext };
 type ReadyState = { value: 'ready'; context: ReadyContext };
@@ -17,14 +17,14 @@ type LoadingState = { value: 'loading'; context: LoadingContext };
 type SuccessState = { value: 'success'; context: SuccessContext };
 type FailureState = { value: 'failure'; context: FailureContext };
 
-type HomeState =
+type FromsState =
 	| InitialState
 	| ReadyState
 	| LoadingState
 	| SuccessState
 	| FailureState;
 
-type HomeEvent = { type: 'FETCH' } | { type: 'RETRY' };
+type FormsEvent = { type: 'FETCH' } | { type: 'RETRY' };
 
 async function fetchForms () {
 	const config = useRuntimeConfig();
@@ -33,8 +33,8 @@ async function fetchForms () {
 	return await fetchWrapper.get(baseUrl);
 }
 
-const homeMachine = createMachine<HomeContext, HomeEvent, HomeState>({
-	id: 'home',
+const formsMachine = createMachine<FormsContext, FormsEvent, FromsState>({
+	id: 'forms',
 	initial: 'initial',
 	context: {
 		forms: undefined,
@@ -87,4 +87,4 @@ const homeMachine = createMachine<HomeContext, HomeEvent, HomeState>({
 	},
 });
 
-export default homeMachine;
+export default formsMachine;

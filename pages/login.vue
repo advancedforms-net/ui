@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores';
 
+const loading = ref(false);
 const form = reactive({
 	email: '',
 });
 
-const onSubmit = () => {
+async function onSubmit () {
 	const authStore = useAuthStore();
 	const { email } = form;
 
-	return authStore.login(email);
+	loading.value = true;
+
+	await authStore.login(email);
+	// TODO error handling
 	// .catch(error => setErrors({ apiError: error }));
-};
+
+	loading.value = false;
+}
 </script>
 
 <template>
@@ -22,7 +28,7 @@ const onSubmit = () => {
 			</el-header>
 
 			<el-main>
-				<el-form :inline="true" :model="form" @submit.prevent="onSubmit">
+				<el-form v-loading="loading" :inline="true" :model="form" @submit.prevent="onSubmit">
 					<el-form-item label="Email">
 						<el-input v-model="form.email" placeholder="Email" type="email" autocomplete="on" required />
 					</el-form-item>
