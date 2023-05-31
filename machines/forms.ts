@@ -26,13 +26,6 @@ type FromsState =
 
 type FormsEvent = { type: 'FETCH' } | { type: 'RETRY' };
 
-async function fetchForms () {
-	const config = useRuntimeConfig();
-	const baseUrl = `${config.public.apiUrl}/Forms`;
-
-	return await fetchWrapper.get(baseUrl);
-}
-
 const formsMachine = createMachine<FormsContext, FormsEvent, FromsState>({
 	id: 'forms',
 	initial: 'initial',
@@ -58,7 +51,7 @@ const formsMachine = createMachine<FormsContext, FormsEvent, FromsState>({
 			}),
 			invoke: {
 				id: 'getForms',
-				src: (_context, _event) => fetchForms(),
+				src: (_context, _event) => formService.getAll(),
 				onDone: {
 					target: 'success',
 					actions: assign({

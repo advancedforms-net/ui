@@ -3,7 +3,7 @@
 </script>
 
 <template>
-	<div>
+	<el-space direction="vertical" style="width: 100%;">
 		<el-container>
 			<el-header>
 				<h1>Docs!</h1>
@@ -13,5 +13,5 @@
 				TODO
 			</el-main>
 		</el-container>
-	</div>
+	</el-space>
 </template>

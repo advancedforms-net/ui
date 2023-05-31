@@ -27,7 +27,7 @@ const authStore = useAuthStore();
 				:ellipsis="false"
 			>
 				<el-menu-item index="/">
-					Advanced Forms
+					<el-image src="/ui/logo.svg" style="height: 56px;" />
 				</el-menu-item>
 
 				<div class="flex-grow" />
