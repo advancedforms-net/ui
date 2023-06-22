@@ -1,9 +1,8 @@
 
-interface Form {
+type Form = FormCreate & {
 	id: UUID;
-	name: string;
-	description: string;
-	useCodes: boolean;
+	presets: Preset[];
+	presetTemplates: PresetTemplate[];
 }
 
 interface FormCreate {

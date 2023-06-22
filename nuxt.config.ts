@@ -31,7 +31,7 @@ export default defineNuxtConfig({
 	ssr: false,
 	runtimeConfig: {
 		public: {
-			apiUrl: process.env.API_URL || 'https://localhost:5001',
+			apiUrl: process.env.API_URL || 'http://10.163.205.71:18003',
 		},
 	},
 

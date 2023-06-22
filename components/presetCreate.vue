@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus';
 
-const props = defineProps<{ hideSubmit?: boolean, data?: FormCreate }>();
-const emit = defineEmits<{(e: 'created', createdForm: Form): void }>();
+const props = defineProps<{ form: Form, hideSubmit?: boolean, data?: PresetCreate }>();
+const emit = defineEmits<{(e: 'created', createdPreset: Preset): void }>();
 
 const isLoading = ref(false);
 const form = ref<FormInstance>();
 const data = reactive(props.data ?? {
-	name: '',
+	formId: props.form.id,
+	templateId: '',
 	description: '',
-	useCodes: false,
+	code: '',
+	values: {},
 });
 const formRules = reactive<FormRules>({
 	name: [
@@ -18,7 +20,7 @@ const formRules = reactive<FormRules>({
 	],
 });
 
-function instanceOfForm (object: any): object is Form {
+function instanceOfPreset (object: any): object is Preset {
 	return 'id' in object;
 }
 
@@ -31,9 +33,9 @@ async function submit () {
 	try {
 		await form.value.validate();
 
-		const created = instanceOfForm(data)
-			? await formService.update(data.id, data)
-			: await formService.create(data);
+		const created = instanceOfPreset(data)
+			? await presetService.update(data)
+			: await presetService.create(data);
 
 		ElMessage.success('Form saved.');
 		emit('created', created);

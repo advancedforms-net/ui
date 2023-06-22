@@ -114,6 +114,6 @@ function formUpdated (updatedForm: Form) {
 			</template>
 		</el-table>
 
-		<form-create-dialog ref="dialogElement" :form-data="form" @created="formUpdated" />
+		<form-create-dialog ref="dialogElement" :data="form" @created="formUpdated" />
 	</el-space>
 </template>
