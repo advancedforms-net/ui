@@ -8,16 +8,21 @@ const isLoading = ref(false);
 const form = ref<FormInstance>();
 const data = reactive(props.data ?? {
 	formId: props.form.id,
-	templateId: '',
+	templateId: null,
 	description: '',
 	code: '',
 	values: {},
 });
 const formRules = reactive<FormRules>({
-	name: [
-		{ required: true, message: 'Please input form name', trigger: 'blur' },
-		{ min: 3, message: 'Form name should be longer then 3 characters', trigger: 'blur' },
+	description: [
+		{ required: true, message: 'Please input description', trigger: 'blur' },
+		{ min: 3, message: 'Description should be longer then 3 characters', trigger: 'blur' },
 	],
+	code: [
+		{ required: props.form.useCodes, message: 'Please input a code', trigger: 'blur' },
+		{ min: 3, message: 'Code should be longer then 3 characters', trigger: 'blur' },
+	],
+	// TODO add template validation
 });
 
 function instanceOfPreset (object: any): object is Preset {
@@ -34,7 +39,7 @@ async function submit () {
 		await form.value.validate();
 
 		const created = instanceOfPreset(data)
-			? await presetService.update(data)
+			? await presetService.update(data.id, data)
 			: await presetService.create(data);
 
 		ElMessage.success('Form saved.');
@@ -66,24 +71,15 @@ defineExpose({
 		:rules="formRules"
 		@submit.prevent="submit"
 	>
-		<el-form-item label="Form name" prop="name">
-			<el-input v-model="data.name" />
-		</el-form-item>
 		<el-form-item label="Description" prop="description">
-			<el-input v-model="data.description" autosize type="textarea" />
+			<el-input v-model="data.description" />
 		</el-form-item>
-		<el-popover
-			placement="bottom"
-			trigger="hover"
-			width="300"
-		>
-			<template #reference>
-				<el-checkbox v-model="data.useCodes" label="Use codes" size="large" prop="useCodes" />
-			</template>
+		<el-form-item v-if="props.form.useCodes" label="Code" prop="code">
+			<el-input v-model="data.code" />
+		</el-form-item>
 
-			<p>Use personal codes to submit responses for the form.</p>
-			<p>This can be changed later but affects existing presets on the form.</p>
-		</el-popover>
+		<!-- TODO template selector -->
+		<!-- TODO value editor -->
 
 		<el-form-item v-if="!props.hideSubmit">
 			<el-button type="primary" @click="submit">

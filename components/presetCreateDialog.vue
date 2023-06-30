@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PresetCreate } from '#components';
 
-const props = defineProps<{ data?: Preset }>();
+const props = defineProps<{ form: Form, data?: Preset }>();
 const emit = defineEmits<{(e: 'created', createdPreset: Preset): void }>();
 
 const dialogFormVisible = ref(false);
@@ -34,7 +34,7 @@ defineExpose({
 <template>
 	<div>
 		<el-dialog v-model="dialogFormVisible" :title="title" @closed="resetForm">
-			<preset-create ref="dialogElement" :data="props.data" hide-submit @created="created" />
+			<preset-create ref="dialogElement" :form="props.form" :data="props.data" hide-submit @created="created" />
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="closeForm">

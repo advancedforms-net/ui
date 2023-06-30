@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { UUID } from 'crypto';
-import { FormCreateDialog } from '#components';
+import { FormCreateDialog, PresetCreateDialog } from '#components';
 
 const route = useRoute();
 const formId = route.params.id as UUID;
 
 const form = ref(await formService.get(formId)); // TODO error handling
 
-const dialogElement = ref<typeof FormCreateDialog>();
+const formDialogElement = ref<typeof FormCreateDialog>();
+const presetDialogElement = ref<typeof PresetCreateDialog>();
 
 function goBack () {
 	const router = useRouter();
@@ -15,6 +16,13 @@ function goBack () {
 }
 function formUpdated (updatedForm: Form) {
 	form.value = updatedForm;
+}
+async function presetUpdated (_updatedPreset: Preset) {
+	form.value = await formService.get(formId);
+}
+
+function addPreset () {
+	presetDialogElement.value?.open();
 }
 </script>
 
@@ -41,7 +49,7 @@ function formUpdated (updatedForm: Form) {
 					<el-button @click="ElMessageBox.alert('TODO')">
 						Export
 					</el-button>
-					<el-button type="primary" @click="dialogElement?.open()">
+					<el-button type="primary" @click="formDialogElement?.open()">
 						Edit
 					</el-button>
 				</div>
@@ -83,13 +91,18 @@ function formUpdated (updatedForm: Form) {
 		<el-button @click="ElMessageBox.alert('TODO')">
 			Add template
 		</el-button>
-		<el-button @click="ElMessageBox.alert('TODO')">
+		<el-button @click="addPreset()">
 			Add preset
 		</el-button>
 
 		<el-table v-loading="false" :data="form.presets" table-layout="auto">
 			<el-table-column label="presets" prop="description" sortable />
 			<el-table-column v-if="form.useCodes" label="code" prop="code" sortable />
+			<el-table-column label="responses" prop="responses" sortable>
+				<template #default="scope">
+					{{ scope.row.responses.length }}
+				</template>
+			</el-table-column>
 			<el-table-column align="right">
 				<template #header>
 					<el-tooltip
@@ -106,7 +119,7 @@ function formUpdated (updatedForm: Form) {
 				<el-empty description="No presets">
 					<el-space direction="vertical">
 						<el-text>Create your first preset to start collecting responses.</el-text>
-						<el-button type="primary" @click="ElMessageBox.alert('TODO')">
+						<el-button type="primary" @click="addPreset()">
 							Add preset
 						</el-button>
 					</el-space>
@@ -114,6 +127,7 @@ function formUpdated (updatedForm: Form) {
 			</template>
 		</el-table>
 
-		<form-create-dialog ref="dialogElement" :data="form" @created="formUpdated" />
+		<form-create-dialog ref="formDialogElement" :data="form" @created="formUpdated" />
+		<preset-create-dialog ref="presetDialogElement" :form="form" :data="undefined" @created="presetUpdated" />
 	</el-space>
 </template>
