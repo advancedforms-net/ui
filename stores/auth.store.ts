@@ -28,7 +28,7 @@ export const useAuthStore = defineStore('auth', () => {
 		// TODO remove the login method, this should be just in the view because this will mail the token
 		const params = new URLSearchParams();
 		params.set('mail', mail);
-		params.set('body', `Login using following url:\n${baseUrl}/?token={token}`);
+		params.set('body', `Login using following url:\n${window.location.toString()}/?token={token}`);
 		await fetchWrapper.post(`${baseUrl}/Authenticate?${params.toString()}`);
 	}
 	function logout () {

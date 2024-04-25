@@ -27,6 +27,11 @@ async function onSubmit () {
 
 	loading.value = false;
 }
+
+const authStore = useAuthStore();
+if (authStore.isLoggedIn) {
+		navigateTo('/');
+}
 </script>
 
 <template>
