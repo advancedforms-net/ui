@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { ElMessage, ElMessageBox } from 'element-plus';
 import { useAuthStore } from '@/stores';
-import { ElMessage, ElMessageBox } from 'element-plus'
 
 const loading = ref(false);
 const form = reactive({
@@ -22,7 +22,7 @@ async function onSubmit () {
 		});
 	} catch (e) {
 		ElMessage.error('Something went wrong with sending login mail.');
-		console.log (e);
+		console.log(e);
 	}
 
 	loading.value = false;
