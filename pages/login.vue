@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores';
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 const loading = ref(false);
 const form = reactive({
@@ -12,9 +13,17 @@ async function onSubmit () {
 
 	loading.value = true;
 
-	await authStore.login(email);
-	// TODO error handling
-	// .catch(error => setErrors({ apiError: error }));
+	try {
+		await authStore.login(email);
+
+		ElMessageBox.alert('<p>An email containing your login information has been sent to the provided email address.</p><br/><p>Please check your inbox (and spam folder, just in case) to access your account.</p>', 'Login send to mail', {
+			confirmButtonText: 'OK',
+			dangerouslyUseHTMLString: true,
+		});
+	} catch (e) {
+		ElMessage.error('Something went wrong with sending login mail.');
+		console.log (e);
+	}
 
 	loading.value = false;
 }
